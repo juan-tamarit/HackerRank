@@ -50,16 +50,21 @@ Outputs must be exact (exact spaces and casing)."""
 def readWord(intro):
     resul=intro.split(";")
     return resul
-def separar (words):
-    found=False
-    i=0
-    while not found:
-       if words[i].isupper():
-           found=True
-           break
-       i+=1
-    sol=words[:i]+" "+words[i:]
+def split_word (words):
+    sol=""
+    for c in words:
+        if c.isupper() and sol:
+            sol+=" "
+        sol+=c
     return sol.lower()
+def lose_brakets(words):
+    return words[:-2]
 word=input()
 inputStr=readWord(word)
-print(separar(inputStr[2]))
+if inputStr[0]=="S":
+    sol1=split_word(inputStr[2])
+    if inputStr[1]=='M':
+        sol2=lose_brakets(sol1)
+    else:
+        sol2=sol1
+print(sol2)
