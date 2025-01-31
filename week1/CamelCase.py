@@ -47,6 +47,9 @@ Use Scanner to read in all information as if it were coming from the keyboard.
 Print all information to the console using standard output (System.out.print() or System.out.println()).
 
 Outputs must be exact (exact spaces and casing)."""
+#import
+import sys
+#funciones
 def readWord(intro):
     resul=intro.split(";")
     return resul
@@ -59,12 +62,46 @@ def split_word (words):
     return sol.lower()
 def lose_brakets(words):
     return words[:-2]
-word=input()
-inputStr=readWord(word)
-if inputStr[0]=="S":
-    sol1=split_word(inputStr[2])
-    if inputStr[1]=='M':
-        sol2=lose_brakets(sol1)
-    else:
-        sol2=sol1
-print(sol2)
+def firstCapitalLetter(word):
+    sol=""
+    for c in word:
+        if not sol:
+            sol+=c
+            sol=sol.upper()
+        else:
+            sol+=c
+    return sol
+def camelCase(word):
+    inputStr=readWord(word)
+    if inputStr[0]=="S":
+        sol1=split_word(inputStr[2])
+        if inputStr[1]=='M':
+            sol2=lose_brakets(sol1)
+        else:
+            sol2=sol1
+    elif inputStr[0]=="C":
+        sol1=inputStr[2].split()
+        if inputStr[1]=="M":
+            sol2=""
+            for word in sol1:
+                if not sol2:
+                    sol2+=word
+                else:
+                    sol2+=firstCapitalLetter(word)
+            sol2+="()"
+        elif inputStr[1]=="C":
+            sol2=""
+            for word in sol1:
+                sol2+=firstCapitalLetter(word)
+        if inputStr[1]=="V":
+            sol2=""
+            for word in sol1:
+                if not sol2:
+                    sol2+=word
+                else:
+                    sol2+=firstCapitalLetter(word)
+    print(sol2)
+#programa
+if __name__ == "__main__":
+    for line in sys.stdin:
+        camelCase(line.strip("\r\n"))
